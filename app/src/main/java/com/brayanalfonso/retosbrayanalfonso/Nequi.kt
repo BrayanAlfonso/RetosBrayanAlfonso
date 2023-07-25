@@ -3,31 +3,104 @@ package com.brayanalfonso.retosbrayanalfonso
 class Nequi {
 
 }
-var phone:Int = 0
-var password:Int = 0
 
-fun createUser(){
-    println("Estas en el aprtado de crear usuario, por favor ingresa lo siguiente: \n" +
-            "1. Ingresa tu numero de telefono.\n")
-        phone= readLine()!!.toInt()
+//variables y recursos goblales globales
 
-    println("2. Ingresa una contraseña de 4 digitos.")
-        password= readLine()!!.toInt()
-}
+var saldoDisponible:Float = 4500F
+var contador:Int=3
 
-fun login(lphone:Int, lpassword:Int):Boolean{
-    if (lphone== phone && lpassword==password){
-        println("Bienvenido al Login")
-        return true
-    }else{
-        println("Lo sentimos tus datos de acceso son incorrectos")
-        return false
-    }
-}
+var numerosTelefonicos = mutableListOf<Long>(3214243125,3112604202,3115655522)
+var claves= mutableListOf<Int>(1234,4321,1324)
+
+
+//Funciones
+
+        fun login(lphone:Long, lpassword:Int):Boolean{
+
+            var indexPhone= numerosTelefonicos.indexOf(lphone)
+            //println(indexPhone) Verificar si se trae correctamente la posicion del elemento
+            var indexClave= claves.indexOf(lpassword)
+            //println(indexClave) Verificar si se trae correctamente la posicion del elemento
+
+
+            return if (indexPhone==indexClave && indexClave!=-1 && indexPhone!=-1){
+                println("Bienvenido de vuelta!")
+                true
+            }else{
+                println("Lo sentimos tus datos de acceso son incorrectos")
+                false
+            }
+        }
+        fun createUser(){
+            println("Estas en el apartado de crear usuario, por favor ingresa lo siguiente: \n" +
+                    "1. Ingresa tu numero de telefono.\n")
+                    numerosTelefonicos.add(readLine()!!.toLong())
+                    //println(numerosTelefonicos.toString())  Validar si se agrego el elemento a la lista :p
+
+            println("2. Ingresa una contraseña de 4 digitos.")
+                    claves.add(readLine()!!.toInt())
+                    //println(claves.toString()) Validar si se agrego el elemento a la lista
+        }
+
+
+
+
+        fun retirarDinero(){
+
+            println("Por favor, ingresa la cantidad de dinero que deseas retirar.")
+            var cantDinero:Float= readLine()!!.toFloat()
+
+            println("Estas seguro de que deseas retirar la cantidad de $cantDinero")
+            var respuesta:String= readLine()!!.lowercase()
+            if (respuesta=="si") {
+                if (saldoDisponible > 2000) {
+                    if (cantDinero < saldoDisponible) {
+                        var random: Int = (100000..999999).random()
+                        println("Tu codigo para retirar es: $random")
+                        saldoDisponible -= cantDinero
+                        println("Tu saldo disponible actual es $saldoDisponible")
+                    } else {
+                        println("Lo sentimos no tienes fondos suficientes")
+                    }
+                } else {
+                    println("Lo sentimos necesitas mas de $2000 para retirar")
+                }
+            }else{
+                println("Has rechazado el retiro.")
+            }
+        }
+
+        fun enviarDinero(){
+            println("Ingresa el numero de telefono al que deseas enviar dinero.")
+            var numEnvio:Long= readLine()!!.toLong()
+
+            println("Ingresa la cantidad de dinero que deseas enviar.")
+            var cantDineroEnvio:Float = readLine()!!.toFloat()
+
+            if (cantDineroEnvio<saldoDisponible){
+                saldoDisponible-=cantDineroEnvio
+                println("Felicidades, la transacción ha sido exitosa al numero$numEnvio!\n" +
+                        "Tu saldo disponible actual es $saldoDisponible")
+            }else{
+                println("Lo sentimos no tienes fondos suficientes para enviar dinero")
+            }
+
+        }
+
+        fun recarga(recarga:Float){
+            println("Estas seguro de recargar $recarga?")
+            var respuesta:String= readLine()!!.lowercase()
+
+            if (respuesta=="si"){
+                saldoDisponible+=recarga
+                println("Felicidades, la recarga ha sido exitosa!\n" +
+                        "Tu saldo disponible actual es $saldoDisponible")
+            }else{
+                println("Has rechazado la recarga")
+            }
+        }
 
 fun main() {
-
-
 
     do {
 
@@ -41,68 +114,79 @@ fun main() {
 
         if (respuesta == 1) {
 
-            println("Ingresa tu numero de telefono")
-            var lphone: Int = readLine()!!.toInt()
+            do {
+                println(" ")
+                println("Login de usuario.\n" +
+                        "Ingresa tu numero de telefono")
+                var lphone: Long = readLine()!!.toLong()
 
-            println("Ingresa tu clave")
-            var lpassword: Int = readLine()!!.toInt()
+                println("Ingresa tu clave")
+                var lpassword: Int = readLine()!!.toInt()
 
+                if (login(lphone, lpassword)) {
 
-            if (login(lphone, lpassword)==true){
+                    do {
+                        println("Tu saldo disponible es $saldoDisponible")
 
-                do {
+                        println("Que quieres hacer el dia de hoy? \n" +
+                                    "1. Sacar plata.\n" +
+                                    "2. Enviar plata \n" +
+                                    "3. Recarga.\n" +
+                                    "4. Salir."
+                        )
+                        var accion: Int = readLine()!!.toInt()
 
-
-                    var saldoDisponible = 4500
-                    println("Tu saldo disponible es $saldoDisponible")
-                    println(" ")
-                    println(
-                        "Que quieres hacer el dia de hoy? \n" +
-                                "1. Sacar plata.\n" +
-                                "2. Enviar plata \n" +
-                                "3. Recarga.\n" +
-                                "4. Salir."
-                    )
-                    var accion: Int = readLine()!!.toInt()
-
-                    if (accion == 1) {
-                        if (saldoDisponible>2000){
-                            println("Por favor, selecciona en donde sacaras tu dinero\n" +
-                                    "1. Cajero.\n" +
-                                    "2. Punto fisico.")
-                            var formaRetiro:Int= readLine()!!.toInt()
-                            if (formaRetiro==1){
+                        if (accion == 1) {
+                            println(
+                                "Por favor, selecciona en donde sacaras tu dinero\n" +
+                                        "1. Cajero.\n" +
+                                        "2. Punto fisico."
+                            )
+                            var formaRetiro: Int = readLine()!!.toInt()
+                            if (formaRetiro == 1) {
                                 println("Has seleccionado la opcion de cajero.")
-                            }else if (formaRetiro==2){
-                                println("Has seleccionado la opcion de punto fisico")
+                                retirarDinero();
+
+                            } else if (formaRetiro == 2) {
+                                println("Has seleccionado la opcion de punto fisico.")
+                                retirarDinero()
+                            }else{
+                                println("Has seleccionado una opción invalida")
                             }
+
+                        } else if (accion == 2) {
+                            enviarDinero()
+                        } else if (accion == 3) {
+                            println("Ingresa el valor que deseas recargar.")
+                            var valorRecarga: Float = readLine()!!.toFloat()
+                            recarga(valorRecarga)
+                        } else if (accion == 4) {
+                            println("Se ha cerrado tu sesión!")
+                            break //Importante el break en este caso es para que salga del ciclo sin preguntar
+                        } else {
+                            println("Has ingresado un numero invalido")
                         }
-                    } else if (accion == 2) {
 
-                    } else if (accion == 3) {
+                        println("Deseas volver al menu principal de opciones?")
+                        var main: String = readLine()!!.lowercase()
 
-                    } else if (accion == 4) {
-                        println("Se ha cerrado tu sesión!")
-                    } else {
-                        println("Has ingresado un numero invalido")
+                    } while (main == "si")
+                } else {
+                    println("Tienes $contador intentos mas")
+                    contador-=1
+                    when(contador){
+                        -1->println("Ya no tienes mas intentos:(")
                     }
-
-                    println("Deseas volver al menu principal de opciones?")
-                    var main:String= readLine()!!.lowercase()
-                }while (main=="si")
-            }else{
-                println("Algo ha ocurrido")
-            }
-
+                }
+            }while (contador>=0)
 
         } else if (respuesta == 2) {
             createUser()
-
         } else {
             println("Has ingresado una opcion invalida")
         }
 
-        println("Deseas volver al login principal?")
+        println("Deseas volver al menu de login?")
         var continuar:String=readLine()!!
 
     }while (continuar=="si")
