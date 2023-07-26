@@ -27,7 +27,7 @@ var claves= mutableListOf<Int>(1234,4321,1324)
                 println("Bienvenido de vuelta!")
                 true
             }else{
-                println("Lo sentimos tus datos de acceso son incorrectos")
+                println("¡Upps! Parece que tus datos de acceso no son correctos.")
                 false
             }
         }
@@ -45,15 +45,14 @@ var claves= mutableListOf<Int>(1234,4321,1324)
 
 
 
-        fun retirarDinero(){
+        fun retirarDinero() {
+            if (saldoDisponible > 2000) {
+                println("Por favor, ingresa la cantidad de dinero que deseas retirar.")
+                var cantDinero: Float = readLine()!!.toFloat()
 
-            println("Por favor, ingresa la cantidad de dinero que deseas retirar.")
-            var cantDinero:Float= readLine()!!.toFloat()
-
-            println("Estas seguro de que deseas retirar la cantidad de $cantDinero")
-            var respuesta:String= readLine()!!.lowercase()
-            if (respuesta=="si") {
-                if (saldoDisponible > 2000) {
+                println("Estas seguro de que deseas retirar la cantidad de $cantDinero")
+                var respuesta: String = readLine()!!.lowercase()
+                if (respuesta == "si" || respuesta=="sí") {
                     if (cantDinero < saldoDisponible) {
                         var random: Int = (100000..999999).random()
                         println("Tu codigo para retirar es: $random")
@@ -63,13 +62,12 @@ var claves= mutableListOf<Int>(1234,4321,1324)
                         println("Lo sentimos no tienes fondos suficientes")
                     }
                 } else {
-                    println("Lo sentimos necesitas mas de $2000 para retirar")
+                    println("Has rechazado el retiro.")
                 }
-            }else{
-                println("Has rechazado el retiro.")
+            } else {
+                println("Lo sentimos necesitas mas de $2000 para retirar")
             }
         }
-
         fun enviarDinero(){
             println("Ingresa el numero de telefono al que deseas enviar dinero.")
             var numEnvio:Long= readLine()!!.toLong()
@@ -91,7 +89,7 @@ var claves= mutableListOf<Int>(1234,4321,1324)
             println("Estas seguro de recargar $recarga?")
             var respuesta:String= readLine()!!.lowercase()
 
-            if (respuesta=="si"){
+            if (respuesta=="si" || respuesta=="sí"){
                 saldoDisponible+=recarga
                 println("Felicidades, la recarga ha sido exitosa!\n" +
                         "Tu saldo disponible actual es $saldoDisponible")
@@ -170,13 +168,18 @@ fun main() {
                         println("Deseas volver al menu principal de opciones?")
                         var main: String = readLine()!!.lowercase()
 
-                    } while (main == "si")
+                    } while (main == "si" || main=="sí")
                 } else {
                     println("Tienes $contador intentos mas")
                     contador-=1
                     when(contador){
                         -1->println("Ya no tienes mas intentos:(")
                     }
+                }
+                println("Salir de nequi?")
+                var salir:String= readLine()!!.lowercase()
+                if (salir=="si" || salir=="sí"){
+                    break
                 }
             }while (contador>=0)
 
@@ -187,7 +190,7 @@ fun main() {
         }
 
         println("Deseas volver al menu de login?")
-        var continuar:String=readLine()!!
+        var continuar:String=readLine()!!.lowercase()
 
-    }while (continuar=="si")
+    }while (continuar=="si" || continuar=="sí")
 }

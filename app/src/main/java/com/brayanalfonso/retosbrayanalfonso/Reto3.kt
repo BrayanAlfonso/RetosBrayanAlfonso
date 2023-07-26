@@ -5,14 +5,14 @@ import android.annotation.SuppressLint
 class Reto3 {
 }
 
-@SuppressLint("SuspiciousIndentation")
+
 fun main() {
     var carros= mutableListOf<String>()
     do {
 
     println("Bienvenido, al concesionario.")
     println("Ingresa el numero que deseas para realizar una accion. \n 1. Insertar auto. \n" +
-            " 2. mostrar todos los datos ded la lista. \n" +
+            " 2. Mostrar todos los datos de la lista. \n" +
             " 3. Buscar carro. \n" +
             " 4. Modificar carro. \n" +
             " 5. Eliminar carro.")
@@ -20,8 +20,8 @@ fun main() {
 
 
     if (option==1){
-        println("Ingresa el nombre del auto que quieres insertar")
-        var nuevoCarro:String= readLine()!!.lowercase()
+        println("Ingresa el nombre del auto que quieres insertar.")
+                var nuevoCarro:String= readLine()!!.lowercase()
 
                 if (carros.any{it == nuevoCarro}){
                     println("Lo sentimos este carro ya se encuentra en la lista")
@@ -51,7 +51,7 @@ fun main() {
         var indexCarro:Int=carros.indexOf(buscarCarro)
             if (indexCarro!=-1){
                 println("Ingresa el nombre nuevo del carro $buscarCarro")
-                var nuevoNombre:String= readLine()!!
+                var nuevoNombre:String= readLine()!!.lowercase()
                 carros[indexCarro]=nuevoNombre
                 println("El carro ha ido actualizado con el nombre $nuevoNombre")
             }else{
@@ -71,7 +71,7 @@ fun main() {
     }else{
         println("Lo sentimos has ingresado una opcion invalida")
     }
-        println("Deseas seguir consultando?")
+        println("Deseas seguir consultando? Ingresa si para continuar")
         var seguir:String= readLine()!!.lowercase()
     }while (seguir=="si" || seguir=="sí")
 }
